@@ -45,6 +45,10 @@
 
             let result = await fetch(register_api,options);
             if(result.ok){
+                let user_data = await result.json();
+                console.log(user_data);
+                localStorage.setItem("email", user_data.email);
+                localStorage.setItem("name", user_data.name);
                 window.location = "http://127.0.0.1:5500/home.html";
             } else {
                 alert("try again");
