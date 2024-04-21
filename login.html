@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <nav>
+        <p>StartSmart</p>
+    </nav>
+    <header>
+        <div class="left">
+            <h1>
+                Login
+            </h1>
+            <form id="login_form" method="post" action="/home.html">
+                <input name="email" type="email" placeholder="Email...." required>
+                <input name="password" type="password" placeholder="Password...." required>
+            </form>
+            <button id="login_btn" type="button">Login</button>
+            <a href="/register.html"><button>Register</button></a>
+        </div>
+        <div class="right">
+            <img src="./imgs/emptyBulb-removebg-preview.png">
+        </div>
+        <div id="glow"></div>
+    </header>
+    <script>
+        const login_btn = document.getElementById("login_btn");
+        login_btn.addEventListener("click", async (e) => {
+            let form_data = getFormData();
+            let login_api = "http://localhost:3000/user/login/";
+            let options = {
+                method: "POST",
+                body: JSON.stringify(form_data),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            }
+            let result = await fetch(login_api,options);
+            if(result.ok){
+                window.location = "http://127.0.0.1:5500/home.html";
+            } else {
+                alert("try again");
+            }
+        });
+
+        function getFormData(){
+            const form = document.getElementById('login_form');
+            const formData = new FormData(form);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+            return jsonData;
+        }
+    </script>
+</body>
+
+</html>
